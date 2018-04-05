@@ -1,0 +1,16 @@
+{
+  "name": "Communications",
+  "src": "communications/index",
+  "icon": "fa fa-pencil-square-o",
+  "type": "menu",
+  "menu": [
+    {"id": "comm_dets", "item": "Details", "list": [
+      {"content": "content 1", "url": "http://www.google.com"},
+      {"content": "content 2", "url": "http://www.google.com"}
+    ]},
+    {"id": "comm_sum", "item": "Summary", "list": [
+      {"content": "content 1", "url": "http://www.google.com"},
+      {"content": "content 2", "url": "http://www.google.com"}
+    ]}
+  ]
+}

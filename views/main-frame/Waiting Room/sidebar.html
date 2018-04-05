@@ -1,0 +1,13 @@
+<div class="sidebar-nav-header"><p>{{name}}</p></div>
+<ul class="sidebar-nav">
+  {{#each menu}}
+  <li class="nav-header sidebar-brand sidebar-nav-accordion collapsed"  data-toggle="collapse" data-target="#{{id}}">
+      <a href="#">{{item}}</a>
+  </li>
+  <ul class="nav nav-list collapse sidebar-nav-accordion-panel" id="{{id}}">
+    {{#each list}}
+     <li><span class="sidebar-item"><p class="sidebar-item-inner">{{content}}</p></span></li>
+     {{/each}}
+  </ul>
+  {{/each}}
+</ul>

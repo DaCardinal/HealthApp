@@ -1,0 +1,461 @@
+// Add jquery 
+// var script = document.createElement("script");
+// script.src = "https://code.jquery.com/jquery-2.1.4.min.js";
+// script.onload = script.onreadystatechange = function() {
+//     console.log("in consultation tab");
+// };
+// document.body.appendChild(script);
+// window.jQuery = window.$ = module.exports;
+
+Dropdown
+<div class="btn-group">
+    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span>Period:</span> Last Year
+    </button>
+    <div class="dropdown-menu">
+        <a href="#">2012</a>
+        <a href="#">2014</a>
+        <a href="#">2015</a>
+        <a href="#">2016</a>
+    </div>
+</div>
+
+Modal
+div id="add_project" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header login-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Project</h4>
+                </div>
+                <div class="modal-body">
+                            <input type="text" placeholder="Project Title" name="name">
+                            <input type="text" placeholder="Post of Post" name="mail">
+                            <input type="text" placeholder="Author" name="passsword">
+                            <textarea placeholder="Desicrption"></textarea>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                    <button type="button" class="add-project" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    const EventEmitter = require("events");
+const fileSystem = require('fs');
+const Promise = require('pinkie');
+
+if (!document) {
+    throw Error("electron-tabs module must be called in renderer process");
+}
+
+var sidebarjs = 'sidebarjs';
+var isVisible = sidebarjs + "--is-visible";
+var isMoving = sidebarjs + "--is-moving";
+var LEFT_POSITION = 'left';
+var RIGHT_POSITION = 'right';
+var TRANSITION_DURATION = 400;
+var POSITIONS = [LEFT_POSITION, RIGHT_POSITION];
+
+class SideBarPanel extends EventEmitter {
+    constructor (args = {}) {
+        super();
+        let options = this.options = {
+            tabClass: args.tabClass || "sidebar-tab",
+            ready: args.ready
+        };
+        this.component = document.querySelector("#wrapper");
+        this.tabContainer = this.component.querySelector("#static-sidebar > ul");
+        this.tabContainerBottom = this.component.querySelector("#static-sidebar > ul .static-sidebar-nav-bottom");
+        this.tabContainerContents = this.component.querySelector(".sidebar-wrapper");
+        this.tabs = [];
+        this.newTabId = 0;
+        
+        if (typeof this.options.ready === "function") {
+            this.options.ready(this);
+        }
+
+    }
+
+    addElement (args = this.options.newTab){
+        if (typeof args === "function") {
+            args = args(this);
+        }
+        let id = this.newTabId;
+        this.newTabId++;
+        let tab = new Tab(this, id, args);
+        this.tabs.push(tab);
+        this.emit("sidebar-added", tab, this);
+        return tab;
+    }
+
+    getTab (id) {
+        for (let i in this.tabs) {
+            if (this.tabs[i].id === id) {
+                return this.tabs[i];
+            }
+        }
+        return null;
+    }
+
+    getActiveTab () {
+        if (this.tabs.length === 0) return null;
+        return this.tabs[0];
+    }
+
+    toggle () {
+        !this.component.classList.contains("collapsed-toggle") ? this.component.classList.add("collapsed-toggle") : this.component.classList.remove("collapsed-toggle");
+    };
+
+    toggleInner(){
+        this.isOpen() ? this.close() : this.open();
+    }
+
+    _open () {
+        console.log("old_open");
+        // this.component.classList.remove("collapsed-toggle");
+    };
+
+    open(){
+        if(this.component.classList.contains("collapsed-toggle")){
+            this.component.classList.remove("collapsed-toggle");
+        }
+        this.component.classList.add("toggled");
+    }
+
+    close(){
+        this.component.classList.remove("toggled");
+    }
+
+    _close () {
+        console.log("old close");
+        // this.component.classList.add("collapsed-toggle");
+    };
+
+    minimize () {
+       if(!this.component.classList.contains("collapsed-toggle")){
+          this.component.classList.add("collapsed-toggle");
+       }
+    }
+
+    isFullWidth () {
+        return !this.component.classList.contains("collapsed-toggle") && !this.component.classList.contains("toggled");
+    };
+
+    isMinimized () {
+        return this.component.classList.contains("collapsed-toggle");
+    }
+
+    isOpen () {
+        return this.component.classList.contains("toggled") && !this.component.classList.contains("collapsed-toggle");
+    }
+    
+}
+
+class Tab extends EventEmitter {
+    constructor (tabGroup, id, args) {
+        super();
+        this.tabGroup = tabGroup;
+        this.id = id;
+        this.title = args.title;
+        this.expandable = args.expandable === false ? false : true;
+        this.tabElements = {};
+        this.config = args.config || null;
+
+        // Set individual tabs and behaviour here
+        TabPrivate.initTab.bind(this)();
+        // TabPrivate.initWebview.bind(this)();
+
+        if (args.visible !== false) {
+            this.show();
+        }
+        if (args.active === true) {
+            this.activate();
+        }
+        if (typeof args.ready === "function") {
+            args.ready(this.tabGroup);
+        }
+    }
+
+    setTitle (title) {
+        if (this.isClosed) return;
+        let span = this.tabElements.title,
+            anchor = this.tabElements.anchor;
+        span.innerHTML = title;
+        this.title = title;
+        anchor.setAttribute("title", title);
+        anchor.setAttribute("data-title", title);
+
+        this.emit("title-changed", title, this);
+        return this;
+    }
+
+    getTitle (){
+        return this.title;
+    }
+
+    activate () {
+        if (this.isClosed) return;
+        let activeTab = this.tabGroup.getActiveTab();
+
+        //TODO: Remove old active tab indication on current tab
+        if (activeTab) {
+            activeTab.tab.classList.remove("active");
+        }
+        TabGroupPrivate.setActiveTab.bind(this.tabGroup)(this);
+        this.tab.classList.add("active");
+        this.emit("active", this);
+
+        return this;
+    }
+
+    show (flag) {
+        if (this.isClosed) return;
+        if (flag !== false) {
+            this.tab.classList.add("visible");
+            this.emit("visible", this);
+        } else {
+            this.tab.classList.remove("visible");
+            this.emit("hidden", this);
+        }
+        return this;
+    }
+
+    hide () {
+        return this.show(false);
+    }
+
+    flash (flag) {
+        if (this.isClosed) return;
+        if (flag !== false) {
+            this.tab.classList.add("flash");
+            this.emit("flash", this);
+        } else {
+            this.tab.classList.remove("flash");
+            this.emit("unflash", this);
+        }
+        return this;
+    }
+
+    unflash () {
+        return this.flash(false);
+    }
+
+    openChildView () {
+        let activeTab = this.tabGroup.getActiveTab();
+        let id = this.id;
+
+        //Check if tab is active
+        if(!activeTab) {
+            this.activate();
+            this.tabGroup.open();
+            return;
+        }
+        
+        activeTab.tabElements["children"]["header"].classList.add("hide");
+        activeTab.tabElements["children"]["wrapper"].classList.add("hide");
+        this.tabElements["children"]["header"].classList.remove("hide");
+        this.tabElements["children"]["wrapper"].classList.remove("hide");
+
+        //If a tab is active
+        if(activeTab.id !== id){
+            this.tabGroup.open();
+        } else {
+            this.tabGroup.toggleInner();
+        }
+    }
+}
+
+const Helpers = {
+    getJson: function(pathToFile){
+        return new Promise(function(resolve, reject) {
+            fileSystem.readFile(pathToFile, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(JSON.parse(data));
+                }
+            });
+        });
+    },
+    guidGenerator: function() {
+        let S4 = function() {
+            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        };
+        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
+}
+
+const TabPrivate = {
+    initTab: function () {
+        let tab = this.tab = document.createElement("li");
+        let tabClass = this.tabGroup.options.tabClass;
+        let tabElems = this.tabElements;
+        tab.classList.add(tabClass);
+        let urlJSON = this.config;
+        
+        // Read menu items and create sidebar
+        if (urlJSON) {
+            Helpers.getJson(urlJSON).then(function(result) {
+                TabPrivate._buildSidebarItems(result, this);
+                this.setTitle(this.title);
+                
+                TabPrivate.initTabButtons.bind(this)(result);
+                TabPrivate.initTabClickHandler.bind(this)();
+                this.tabGroup.tabContainer.appendChild(this.tab);
+
+            }.bind(this), function(err) {
+                console.log('Can not find the he targeted page :' + err);
+            }.bind(this));
+        } else {
+            console.log('Config not set!');
+        }
+    },
+
+    initTabChildren: function (sidebarConfig) {
+        // console.log(sidebarConfig, this);
+        TabPrivate._buildSidebarChildren.bind(this)(sidebarConfig);
+    },
+
+    initTabButtons: function (sidebarConfig) {
+        if (this.expandable) {
+            TabPrivate.initTabChildren.bind(this)(sidebarConfig);
+        }
+    },
+
+    initTabClickHandler: function () {
+        // Click
+        const tabClickHandler = function (e) {
+            if (this.isClosed) return;
+            if (e.which === 2) {
+                console.log("closed?");
+                this.close();
+            }
+            this.emit("click", this);
+        };
+        this.tab.addEventListener("click", tabClickHandler.bind(this), false);
+
+        // Mouse down
+        const tabMouseDownHandler = function (e) {
+            if (this.isClosed) return;
+            if (e.which === 1) {
+                if (e.target.matches("button")) return; // Checks what the user clicked
+                if (this.expandable) this.openChildView();
+                this.activate();
+            }
+        };
+        this.tab.addEventListener("mousedown", tabMouseDownHandler.bind(this), false);
+    },
+
+    _buildSidebarItems: function (sidebarConfig, tabHandler){
+        let span = document.createElement("span");
+        let anchor = document.createElement("a");
+        let icon = document.createElement("i");
+
+        if (sidebarConfig["type"] === "menu") {  
+            anchor.classList.add("menu-toggle");
+            anchor.setAttribute("rel", "static-sidebar-nav-tooltip");
+            for (let el of sidebarConfig["icon"].split(" ")) {
+                icon.classList.add(el);
+            }
+            span.classList.add("static-sidebar-nav-text");
+
+            anchor.appendChild(icon);
+            anchor.appendChild(span);
+            tabHandler.tab.appendChild(anchor);
+            tabHandler.tabElements["anchor"] = anchor;
+            tabHandler.tabElements["icon"] = icon;
+            tabHandler.tabElements["title"] = span;  
+        }
+    }, 
+
+    _buildSidebarChildren: function (){
+        let ulWrapper = document.createElement("ul");
+        let header = document.createElement("div");
+        let pTagWrapper = document.createElement("p");
+
+        pTagWrapper.innerHTML = this.title;
+        ulWrapper.classList.add("sidebar-nav");
+        header.classList.add("sidebar-nav-header");
+        header.appendChild(pTagWrapper);
+
+        for (let el2 of ["ul1", "ul2", "ul3"]) {
+            let anchor = document.createElement("a");
+            let ulTag = document.createElement("ul");
+            let liHeaderTag = document.createElement("li");
+            let id = "stid-" + Helpers.guidGenerator();
+
+            anchor.innerHTML = "Menu Item 1";
+            ulTag.classList.add("nav", "nav-list", "collapse", "sidebar-nav-accordion-panel");
+
+            liHeaderTag.classList.add("nav-header", "sidebar-brand", "sidebar-nav-accordion", "collapsed");
+            liHeaderTag.setAttribute("data-toggle", "collapse");
+            liHeaderTag.setAttribute("data-target", "#"+id);
+            liHeaderTag.appendChild(anchor);
+
+            for (let el of ["li1", "li2", "li3"]) {
+                let span = document.createElement("span");
+                let pTag = document.createElement("p");
+                let liTag = document.createElement("li");
+
+                pTag.innerHTML = "Content";
+                pTag.classList.add("sidebar-item-inner");
+                span.classList.add("sidebar-item");
+                ulTag.setAttribute("id", id);
+
+                span.appendChild(pTag);
+                liTag.appendChild(span);
+                ulTag.appendChild(liTag);
+            }
+            ulWrapper.appendChild(liHeaderTag);
+            ulWrapper.appendChild(ulTag);
+        }
+
+        let childParms = {};
+        childParms["header"] = header;
+        childParms["wrapper"] = ulWrapper;
+        this.tabElements["children"] = childParms;
+
+        header.classList.add("hide");
+        ulWrapper.classList.add("hide");
+        this.tabGroup.tabContainerContents.appendChild(header);
+        this.tabGroup.tabContainerContents.appendChild(ulWrapper);
+    }
+};
+
+const TabGroupPrivate = {
+
+    removeTab: function (tab, triggerEvent) {
+        let id = tab.id;
+        for (let i in this.tabs) {
+            if (this.tabs[i].id === id) {
+                this.tabs.splice(i, 1);
+                break;
+            }
+        }
+        if (triggerEvent) {
+            this.emit("tab-removed", tab, this);
+        }
+        return this;
+    },
+
+    setActiveTab: function (tab) {
+        TabGroupPrivate.removeTab.bind(this)(tab);
+        this.tabs.unshift(tab);
+        this.emit("tab-active", tab, this);
+        return this;
+    },
+
+    activateRecentTab: function (tab) {
+        if (this.tabs.length > 0) {
+            this.tabs[0].activate();
+        }
+        return this;
+    }
+};
+
+module.exports = SideBarPanel;

@@ -1,0 +1,18 @@
+{
+  "name": "Appointments",
+  "src": "appointments/index",
+  "icon": "fa fa-calendar-check-o",
+  "type": "menu",
+  "menu": [
+    {"id": "appoint_gen", "item": "Appointment Details", "list": [
+      {"content": "Add Appointment", "url": "http://www.google.com"},
+      {"content": "Edit Appointment", "url": "http://www.google.com"},
+      {"content": "Appointment Card", "url": "http://www.google.com"},
+      {"content": "View Consultation", "url": "http://www.google.com"},
+      {"content": "Patient Details", "url": "http://www.google.com"},
+      {"content": "Recurring Appointments", "url": "http://www.google.com"},
+      {"content": "Find Free Slots", "url": "http://www.google.com"},
+      {"content": "Availability", "url": "http://www.google.com"}
+    ]}
+  ]
+}

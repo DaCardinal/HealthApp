@@ -1,0 +1,17 @@
+{
+  "name": "Appointments",
+  "menu": [
+    {"id": "Yehuda", "item": "Katz", "list": [
+      {"content": "Yehuda Katz content 1", "url": "http://www.google.com"},
+      {"content": "Yehuda Katz content 2", "url": "http://www.google.com"}
+    ]},
+    {"id": "Carl", "item": "Lerche", "list": [
+      {"content": "Carl Lerche content 1", "url": "http://www.google.com"},
+      {"content": "Carl Lerche content 2", "url": "http://www.google.com"},
+      {"content": "Carl Lerche content 3", "url": "http://www.google.com"}
+    ]},
+    {"id": "Alan", "item": "Johnson", "list": [
+      {"content": "Alan Johnson content 1", "url": "http://www.google.com"}
+    ]}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Consultation",
+  "src": "consultation/index",
+  "icon": "fa fa-stethoscope",
+  "type": "menu",
+  "menu": [
+    {"id": "cons_cd", "item": "Consultation Details", "url": "consultation/index", "list": [
+      {"content": "Find Patient", "action": "search"},
+      {"content": "Patient Summary", "action": "summary"},
+      {"content": "Begin Consultation", "action": "begin_consultation"},
+      {"content": "Edit Details", "action": "edit_details"},
+      {"content": "Edit Consultation", "action": "edit_consultation"},
+      {"content": "Finish Consultation", "action": "finish_consultation"},
+      {"content": "Open Consultation", "action": "open_consultation"}
+    ]},
+    {"id": "cons_proc", "item": "Procedures", "url": "consultation/procedure/procedure", "list": [
+      {"content": "Save Procedure", "action": "save"},
+      {"content": "Clear Procedure", "action": "clear"},
+      {"content": "Delete Procedure", "action": "delete"}
+    ]},
+    {"id": "cons_notes", "item": "Notes", "url": "consultation/notes/notes", "list": [
+      {"content": "Save Note", "action": "save"},
+      {"content": "Print All Notes", "action": "print_all"},
+      {"content": "Print Selected Notes", "action": "print_selected"}
+    ]},
+    {"id": "cons_immun", "item": "Immunisations", "url": "consultation/immunisations/immunisations", "list": [
+      {"content": "Add Schedule", "action": "add"},
+      {"content": "Print Schedule", "action": "print_schedule"},
+      {"content": "Print Record", "action": "print_record"}
+    ]},
+    {"id": "cons_meds", "item": "Medications", "url": "consultation/medications/medications", "list": [
+      {"content": "Prescriptions", "action": "prescribe"},
+      {"content": "Dispensed Meds", "action": "dispense"},
+      {"content": "Consumables Items", "action": "cons_items"}
+    ]},
+    {"id": "cons_invs", "item": "Investigations", "url": "consultation/investigations/investigations", "list": [
+      {"content": "Summary", "action": "summary"},
+      {"content": "Add Investigations", "action": "add"},
+      {"content": "Print Investigations", "action": "print"}
+    ]}
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Reports",
+  "src": "reports/index",
+  "icon": "fa fa-newspaper-o",
+  "type": "menu",
+  "menu": [
+    {"id": "rep_p", "item": "Patients", "list": [
+      {"content": "Full Patient Listing", "url": "http://www.google.com"},
+      {"content": "Consultation Summary", "url": "http://www.google.com"},
+      {"content": "Medical Legal Report", "url": "http://www.google.com"},
+      {"content": "Full Patient Listing with Conditions", "url": "http://www.google.com"},
+      {"content": "Appointment History", "url": "http://www.google.com"}
+    ]},
+    {"id": "rep_presc", "item": "Prescriptions", "list": [
+      {"content": "Full Patient Listing", "url": "http://www.google.com"},
+      {"content": "Consultation Summary", "url": "http://www.google.com"},
+      {"content": "Medical Legal Report", "url": "http://www.google.com"},
+      {"content": "Full Patient Listing with Conditions", "url": "http://www.google.com"},
+      {"content": "Appointment History", "url": "http://www.google.com"}
+    ]},
+    {"id": "rep_inv", "item": "Investigations", "list": [
+      {"content": "Full Patient Listing", "url": "http://www.google.com"},
+      {"content": "Consultation Summary", "url": "http://www.google.com"},
+      {"content": "Medical Legal Report", "url": "http://www.google.com"},
+      {"content": "Full Patient Listing with Conditions", "url": "http://www.google.com"},
+      {"content": "Appointment History", "url": "http://www.google.com"}
+    ]},
+    {"id": "rep_acc", "item": "Accounting", "list": [
+      {"content": "Full Patient Listing", "url": "http://www.google.com"},
+      {"content": "Consultation Summary", "url": "http://www.google.com"},
+      {"content": "Medical Legal Report", "url": "http://www.google.com"},
+      {"content": "Full Patient Listing with Conditions", "url": "http://www.google.com"},
+      {"content": "Appointment History", "url": "http://www.google.com"}
+    ]}
+  ]
+}

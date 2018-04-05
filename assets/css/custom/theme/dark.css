@@ -1,0 +1,26 @@
+body{
+  background-color: #2D2D30;
+	border-bottom: 24px solid  #68217A;
+}
+
+#main-frame #title-bar {
+	color: #ADADAD;
+	background-color: #333;
+}
+
+#main-frame #title-bar-btns button {
+  background-color: transparent;
+  color: #F1F1F1;
+}
+
+#main-frame #title-bar-btns button:hover {
+	background-color: #3F3F41;
+}
+
+#main-frame #content {
+	color: #CCCCCC;
+}
+
+#main-frame #main-frame a {
+  color: #68217A;
+}

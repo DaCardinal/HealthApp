@@ -1,0 +1,21 @@
+{
+  "name": "Billing",
+  "src": "billing/index",
+  "icon": "fa fa-money",
+  "type": "menu",
+  "menu": [
+    {"id": "bill_dets", "item": "Billing Details", "list": [
+      {"content": "Invoice", "url": "http://www.google.com"},
+      {"content": "Payment", "url": "http://www.google.com"},
+      {"content": "Claims", "url": "http://www.google.com"},
+      {"content": "Generate Report", "url": "http://www.google.com"},
+      {"content": "View Report", "url": "http://www.google.com"},
+      {"content": "Print Invoice", "url": "http://www.google.com"},
+      {"content": "Print Receipt", "url": "http://www.google.com"}
+    ]},
+    {"id": "bill_arch", "item": "Archive", "list": [
+      {"content": "Invoices", "url": "http://www.google.com"},
+      {"content": "Claims", "url": "http://www.google.com"}
+    ]}
+  ]
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link href="{{assets}}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="{{assets}}/css/font-awesome/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{assets}}/css/custom/electron-tabs/electron-tabs.css">
+    <link rel="stylesheet" href="{{assets}}/css/custom/electron-tabs/dragula.css">
+    <link rel="stylesheet" href="{{assets}}/css/custom/acc.css" />
+    <link rel="stylesheet" href="{{assets}}/css/custom/style.css" />
+    <script src="{{assets}}/js/jquery.js"></script>
+    <script type="application/javascript">
+        if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+            window.$ = window.jQuery = module.exports;
+        }
+    </script>
+    <script src="{{assets}}/js/bootstrap/bootstrap.js"></script>
+    <script src="{{assets}}/js/custom/tooltip.js"></script>
+  </head>
+  <body>
+    <section id="main-frame">
+      <div id="title-bar">
+        <div id="title">My Life For The Code</div>
+        <div id="title-bar-btns">
+          <button id="min-btn"><i class="fa fa-window-minimize"></i></button>
+          <button id="max-btn"><i class="fa fa-window-restore"></i></button>
+          <button id="close-btn"><i class="fa fa-close"></i></button>
+        </div>
+      </div>
+      <div id="content">
+          <div id="wrapper">
+            <!-- static sidebar -->
+            <div id="static-sidebar" class="static-sidebar-nav">
+              <div class="background-blur"></div>
+              <ul class=""></ul>
+            </div>
+            <!-- end of static sidebar -->
+            <!-- start: sidebar children go here -->
+            <div class="sidebar-wrapper"></div>
+            <!-- end: sidebar children go here -->
+            <div id="page-frame" class="page-content-wrapper">
+              <div class="container-fluid">
+                  <div class="etabs-tabgroup">
+                      <div class="etabs-tabs"></div>
+                      <div class="etabs-buttons"></div>
+                  </div>
+                  <div class="etabs-views"></div>
+                  <div id="page-frame-content" class="row">
+                      {{content}}
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="toolbar-bottom">
+        <!-- <hr/> -->
+        <!-- <input type="text" data-role="tagsinput" name="bottom_tags" placeholder="Tags"></input> -->
+        <!-- <div class="toolbar-bottom-inner"> -->
+          <!-- <div class="pull-right">
+            <button type="button" class="btn btn-secondary toolbar-bottom-publish-btn">Publish</button>
+          </div> -->
+        <!-- </div> -->
+        <div>
+          <p style="margin: -7px -1px;color: white; font-size: 11px;"> Test code </p>
+        </div>
+        <div class="pull-right">
+          <p style="margin: -7px -1px; color: white; font-size: 11px;"> Test code 0:11</p>
+        </div>
+      </div>
+    </section>
+    <script>
+        /* You can also require other files to run in this process */
+        $(function(){
+          require('{{appBase}}/layouts/secondary.controller.js');
+        });
+    </script>
+  </body>
+</html>

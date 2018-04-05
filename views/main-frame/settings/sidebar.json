@@ -1,0 +1,18 @@
+{
+  "name": "Settings",
+  "type": "settings",
+  "menu": [
+    {"item": "Settings",
+     "icon": "fa fa-tasks", 
+     "url": "http://www.google.com"
+    },
+    {"item": "Collapse",
+      "icon": "fa fa-circle-o-notch", 
+      "url": "http://www.google.com"
+    },
+    {"item": "Logout",
+      "icon": "fa fa-lock", 
+      "url": "http://www.google.com"
+    }
+  ]
+}

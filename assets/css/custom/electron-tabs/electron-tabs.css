@@ -1,0 +1,142 @@
+.etabs-tabgroup {
+    width: 100%;
+    background-color: #252526;
+    cursor: pointer;
+    font: caption;
+    font-size: 14px;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.etabs-tabgroup::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.etabs-tabgroup::-webkit-scrollbar{
+	height: 3px;
+  width: 0px;
+	background-color: #F5F5F5;
+}
+
+.etabs-tabgroup::-webkit-scrollbar-thumb{
+	background-color: #000000;
+  cursor: pointer;
+}
+
+.etabs-tabs {
+    float: left;
+}
+
+.etabs-tab {
+    display: none;
+    position: relative;
+    color: #8A8A8A;
+    height: 32px;
+    bottom: 0;
+    top: 0;
+    margin: 0px;
+    padding: 0px;
+    /*border: 1px solid #aaa;*/
+    border-bottom: none;
+    /*background: linear-gradient(to bottom, rgba(234,234,234,1) 0%,rgba(204,204,204,1) 100%);*/
+    font: caption;
+    font-size: 14px;
+    background-color: #2D2D2D;
+    cursor: pointer;
+}
+
+/* Dragula */
+.etabs-tab.gu-mirror {
+    padding-bottom: 0;
+}
+
+.etabs-tab:first-child {
+    border-left: none;
+}
+
+.etabs-tab.visible {
+    display: inline-block;
+}
+
+.etabs-tab.active,
+.etabs-tab.active > .etabs-tab-buttons button {
+    background: #1E1E1E;
+    color: #FFF;
+}
+
+.etabs-tab.flash {
+    background: linear-gradient(to bottom, rgba(255,243,170,1) 0%,rgba(255,227,37,1) 100%);
+}
+
+.etabs-buttons {
+    float: left;
+}
+
+.etabs-buttons button {
+    float: left;
+    color: #333;
+    background: none;
+    border: none;
+    font-size: 12px;
+    margin-top: 6px;
+    border-radius: 2px;
+    margin-left: 4px;
+    width: 20px;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.etabs-buttons button:hover {
+    color: #eee;
+    background-color: #aaa;
+}
+
+.etabs-tab-icon {
+    display: inline-block;
+    height: 16px;
+}
+
+.etabs-tab-icon img {
+    max-width: 16px;
+    max-height: 16px;
+}
+
+.etabs-tab-title {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 8px 8px 0px 8px;
+}
+
+.etabs-tab-buttons {
+    display: inline-block;
+    margin: 0px 0px 0px 12px;
+    font-size: 12px;
+    bottom: 2px;
+    position: relative;
+}
+
+.etabs-tab-buttons button {
+    display: inline-block;
+    color: #333;
+    background: none;
+    border: none;
+    width: 20px;
+    text-align: center;
+    /*border-radius: 2px;*/
+}
+
+.etabs-tab-buttons button:hover {
+    /*color: #eee;*/
+    /*background-color: #aaa;*/
+}
+
+.etabs-views {
+    /*border-top: 1px solid #aaa;*/
+    height: calc(100vh - 33px);
+    padding-bottom: 42px;
+}

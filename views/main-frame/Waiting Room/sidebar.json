@@ -1,0 +1,20 @@
+{
+  "name": "Waiting Rooms",
+  "src": "waiting room/index",
+  "icon": "fa fa-users",
+  "type": "menu",
+  "menu": [
+    {"id": "wr_details", "item": "Waiting Room Details", "list": [
+      {"content": "Patient Expected", "url": "http://www.google.com"},
+      {"content": "Patients Present", "url": "http://www.google.com"},
+      {"content": "In Consulation", "url": "http://www.google.com"},
+      {"content": "Visit History", "url": "http://www.google.com"}
+    ]},
+    {"id": "wr_summary", "item": "Patient Status", "list": [
+      {"content": "Arrived", "url": "http://www.google.com"},
+      {"content": "View Consulation", "url": "http://www.google.com"},
+      {"content": "Completed", "url": "http://www.google.com"},
+      {"content": "Cancelled", "url": "http://www.google.com"}
+    ]}
+  ]
+}
